@@ -45,8 +45,8 @@ public class RepositoryEmployee {
         EmployeeUmum lead3 = new ProjectLeader("PL-003", "Cecep", "Jakarta", 28, "Project Owner", bogor, 4 );
 
         EmployeeUmum  anlyst1 = new Analyst("AL-001", "Indah", "Garut", 25, "Analyst", jakarta);
-        EmployeeUmum  anlyst2 = new Analyst("AL-002", "Indah", "Garut", 30, "Analyst", bekasi);
-        EmployeeUmum  anlyst3 = new Analyst("AL-003", "Indah", "Garut", 28, "Analyst", bogor);
+        EmployeeUmum  anlyst2 = new Analyst("AL-002", "Puspa", "Bandung", 30, "Analyst", bekasi);
+        EmployeeUmum  anlyst3 = new Analyst("AL-003", "Sari", "Jakarta", 28, "Analyst", bogor);
 
         listEmployee.add(emp1);
         listEmployee.add(emp2);
