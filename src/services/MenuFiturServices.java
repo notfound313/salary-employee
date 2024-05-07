@@ -139,6 +139,7 @@ public class MenuFiturServices {
         EmployeeUmum emp = new Programmer(generateId, employeeUmum[1], employeeUmum[2], Integer.valueOf(employeeUmum[3]), employeeUmum[4], place,employeeUmum[6],Integer.valueOf(employeeUmum[7]));
 
         employeeUmums.add(emp);
+        System.out.println("Success menambah karyawan");
 
     }
 
@@ -305,6 +306,7 @@ public class MenuFiturServices {
         for (EmployeeUmum employeeUmum : listEmployee) {
             if(employeeUmum.getEmployeeId().contains(idEmployee)){
                 employeeUmum.setPlacement(plc);
+                employeeUmum.calculateSalaryEmployee();
                 
             }
             
@@ -326,7 +328,7 @@ public class MenuFiturServices {
         do{
         System.out.format("+--------------------------------------------------------------------------------+%n");
         String leftColomn = "| %-5s | %-10s | %-10s | %-10s | %-20s |%-9s|%n";
-        System.out.format(leftColomn,"No","Employee Id", "Name", "Addrees" ,"Jobdesc","Palcement");
+        System.out.format(leftColomn,"No","Employee Id", "Name", "Addrees" ,"Jobdesc","Placement");
         System.out.format("+--------------------------------------------------------------------------------+%n");
         String leftAlignment = "| %-5d | %-10s | %-10s | %-10s | %-20s |%-10s|%n";  
         for (EmployeeUmum employeeUmum : listEmployee) {
@@ -403,15 +405,75 @@ public class MenuFiturServices {
         System.out.println("employee berhasil dihapus...");
 
     }
+    /*
+     * Fitur Searching
+     */
+    public void searching(List<EmployeeUmum> employeeUmums){
+        List<Placement> placements = getAllPlacement(employeeUmums);
+        int option;        
+        do{
+            System.out.println("1. Search by Placement");
+            System.out.println("0. Back to Main Menu");
+            option = inputServices.inputIsNumber();
+            switch (option) {
+                case 1:
+                    searchByPlacement(employeeUmums,placements);
+                    option=0;                    
+                    break;
+            
+                default:
+                    break;
+            }
+        }while(option!=0);
+
+    }
+    /*     
+     * searching by placement 
+     */
+    
+    public void searchByPlacement(List<EmployeeUmum> employeeUmums,List<Placement> placements){
+        List<EmployeeUmum> listByPlacement = new ArrayList<>();        
+        String idPlacement = inputServices.requestPlacement(placements);
+        for (EmployeeUmum employee : employeeUmums) {
+            if(employee.getPlacement().getNamaKota().contains(idPlacement)){
+                listByPlacement.add(employee);
+            }
+            
+        }
+
+        int num = 0;
+        int option;
+        do{
+        System.out.format("+--------------------------------------------------------------------------------+%n");
+        String leftColomn = "| %-5s | %-10s | %-10s | %-10s | %-20s |%-9s|%n";
+        System.out.format(leftColomn,"No","Employee Id", "Name", "Addrees" ,"Jobdesc","Placement");
+        System.out.format("+--------------------------------------------------------------------------------+%n");
+        String leftAlignment = "| %-5d | %-10s | %-10s | %-10s | %-20s |%-10s|%n";  
+        for (EmployeeUmum employeeUmum : listByPlacement) {
+            System.out.format(leftAlignment, num+=1,employeeUmum.getEmployeeId(), employeeUmum.getName(), employeeUmum.getAddress(), employeeUmum.getJobDesc(), employeeUmum.getPlacement().getNamaKota());
+            System.out.format("+--------------------------------------------------------------------------------+%n");
+        }
+        String leftC = "| %-5d | %-70s |%n";
+        System.out.format(leftC,0,"Kembali Ke Main Menu");
+        System.out.format("+--------------------------------------------------------------------------------+%n");
+
+        option = inputServices.inputIsNumber();
+
+    }while(option!=0);
+
+    }
+
 
     /*
      * 
      * Fitur Exit
      */
     public void exitApplication(){
+        System.out.println("==========================================");
         System.out.println();
-        System.out.println("-------------Terima kasih-----------");
+        System.out.println("   -------------Terima kasih-----------");
         System.out.println();
+        System.out.println("==========================================");
     }
 
     

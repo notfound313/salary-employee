@@ -13,7 +13,8 @@ public class MainMenuServices {
         RepositoryEmployee repositoryEmployee = new RepositoryEmployee();
         List<EmployeeUmum> listEmployeeUmum = repositoryEmployee.getAllEmployee();
         int option;
-        System.out.println("----- Selamat Datang di Aplikasi Pendataan karyawan PT. Secret Semut 79 -----");
+        System.out.println("=================================================================================");        
+        System.out.println("  ----- Selamat Datang di Aplikasi Pendataan karyawan PT. Secret Semut 79 -----");
         
 
         do{
@@ -43,7 +44,8 @@ public class MainMenuServices {
                 case 5:
                     fiturMenu.removeEmployee(listEmployeeUmum);
                     break;
-                case 6: 
+                case 6:
+                    fiturMenu.searching(listEmployeeUmum); 
                     break;
                 case 0:
                     fiturMenu.exitApplication();
