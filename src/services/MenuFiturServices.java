@@ -6,25 +6,35 @@ import java.util.List;
 import model.child.job.Analyst;
 import model.child.job.Programmer;
 import model.child.job.ProjectLeader;
+import model.parent.EmployeeTech;
 import model.parent.EmployeeUmum;
 import model.parent.Placement;
 
 public class MenuFiturServices { 
+
+
+    InputDataServices inputServices = new InputDataServices();
     
     /*
      * Menu fitur Menambah data Karyawan
      */
 
-    public void menambahKarywanBaru(String[] dataKaryawanBaru, List<EmployeeUmum> employeeUmums){
-        
+    public void menambahKarywanBaru(List<EmployeeUmum> employeeUmums){
+        String[] dataKaryawanBaru= inputServices.inputJenisKaryawan();
         String [] jenisKaryawan = {"employee","Programmer","Project Leader", "Analyst"};
         int idx = 0 ;
-        for (int i = 0; i < jenisKaryawan.length; i++) {
-            if(dataKaryawanBaru[0].equalsIgnoreCase(jenisKaryawan[i])){
-                idx = i+1;
-            }
-            
-        } 
+        if(dataKaryawanBaru.length != 0){
+            for (int i = 0; i < jenisKaryawan.length; i++) {
+                if(dataKaryawanBaru[0].equalsIgnoreCase(jenisKaryawan[i])){
+                    idx = i+1;
+                }
+                
+            } 
+
+        }       
+        
+        
+        
         switch (idx) {
             case 1: 
                 addEmployee(dataKaryawanBaru, employeeUmums);               
@@ -41,7 +51,7 @@ public class MenuFiturServices {
             default:
                 break;
         }
-        System.out.println("Success menamah karyawan");
+        
         
 
     }
@@ -72,6 +82,7 @@ public class MenuFiturServices {
         EmployeeUmum emp = new EmployeeUmum(generateId, employeeUmum[1], employeeUmum[2], Integer.valueOf(employeeUmum[3]), employeeUmum[4], place);
 
         employeeUmums.add(emp);
+        System.out.println("Success menambah karyawan");
 
     }
 
@@ -185,6 +196,7 @@ public class MenuFiturServices {
         EmployeeUmum emp = new ProjectLeader(generateId, employeeUmum[1], employeeUmum[2], Integer.valueOf(employeeUmum[3]), employeeUmum[4], place, Integer.valueOf(employeeUmum[6]));
 
         employeeUmums.add(emp);
+        System.out.println("Success menambah karyawan");
 
     }
 
@@ -239,9 +251,10 @@ public class MenuFiturServices {
         }
 
         String generateId = generateIdAnalyst(listEmployeeUmums);
-        EmployeeUmum emp = new ProjectLeader(generateId, employeeUmum[1], employeeUmum[2], Integer.valueOf(employeeUmum[3]), employeeUmum[4], place, Integer.valueOf(employeeUmum[6]));
+        EmployeeUmum emp = new Analyst(generateId, employeeUmum[1], employeeUmum[2], Integer.valueOf(employeeUmum[3]), employeeUmum[4], place);
 
         employeeUmums.add(emp);
+        System.out.println("Success menambah karyawan");
 
     }
 
@@ -271,6 +284,134 @@ public class MenuFiturServices {
 
         return empId;
 
+    }
+    /*
+     * Fitur edit Employee
+     */
+    public void editEmployee(List<EmployeeUmum> listEmployee){
+        List<Placement> placements = getAllPlacement(listEmployee);
+        String idEmployee = inputServices.requestIdEmployee(listEmployee);
+        String place = inputServices.requestPlacement(placements);
+
+        
+        Placement plc = new Placement();
+        for (Placement placement : placements) {
+            if(placement.getNamaKota().contains(place)){
+                plc=placement;
+
+            }
+            
+        }
+        for (EmployeeUmum employeeUmum : listEmployee) {
+            if(employeeUmum.getEmployeeId().contains(idEmployee)){
+                employeeUmum.setPlacement(plc);
+                
+            }
+            
+        }
+
+        System.out.println("Suksess edit data employee");
+
+
+        
+    }
+
+    /*
+     * Fitur Menampilkan data employee
+     */
+    public void showDataEmployee(List<EmployeeUmum> listEmployee){
+                
+        int num = 0;
+        int option;
+        do{
+        System.out.format("+--------------------------------------------------------------------------------+%n");
+        String leftColomn = "| %-5s | %-10s | %-10s | %-10s | %-20s |%-9s|%n";
+        System.out.format(leftColomn,"No","Employee Id", "Name", "Addrees" ,"Jobdesc","Palcement");
+        System.out.format("+--------------------------------------------------------------------------------+%n");
+        String leftAlignment = "| %-5d | %-10s | %-10s | %-10s | %-20s |%-10s|%n";  
+        for (EmployeeUmum employeeUmum : listEmployee) {
+            System.out.format(leftAlignment, num+=1,employeeUmum.getEmployeeId(), employeeUmum.getName(), employeeUmum.getAddress(), employeeUmum.getJobDesc(), employeeUmum.getPlacement().getNamaKota());
+            System.out.format("+--------------------------------------------------------------------------------+%n");
+        }
+        String leftC = "| %-5d | %-70s |%n";
+        System.out.format(leftC,0,"Kembali Ke Main Menu");
+        System.out.format("+--------------------------------------------------------------------------------+%n");
+
+        option = inputServices.inputIsNumber();
+
+    }while(option!=0);
+
+    }
+    /*
+     * fitur data Pay roll
+     */
+    public void dataPayRollEmployee(List<EmployeeUmum> employeeUmums){
+        double totalPayrol = 0;
+        for (EmployeeUmum employeeUmum : employeeUmums) {
+            if(employeeUmum instanceof EmployeeTech){
+                totalPayrol += ((EmployeeTech)employeeUmum).getAllowance()+employeeUmum.getSalary();
+            }else{
+                totalPayrol +=employeeUmum.getSalary();
+            }
+            
+        }
+        int num = 0;
+        int option;
+        do{
+        System.out.format("+--------------------------------------------------------------------------------+%n");
+        String leftColomn = "| %-5s | %-10s | %-10s | %-20s | %-10s |%-9s|%n";
+        System.out.format(leftColomn,"No","Employee Id", "Name", "Jobdesc","Allowance","Salary");
+        System.out.format("+--------------------------------------------------------------------------------+%n");
+        String leftAlignment = "| %-5d | %-10s | %-10s | %-20s | %-10.2f |%-10.2f|%n";  
+        for (EmployeeUmum employeeUmum : employeeUmums) {
+            if(employeeUmum instanceof EmployeeTech){
+                num +=1;                
+                System.out.format(leftAlignment,num, employeeUmum.getEmployeeId(), employeeUmum.getName(), employeeUmum.getJobDesc(),  ((EmployeeTech)employeeUmum).getAllowance(), employeeUmum.getSalary());
+                System.out.format("+--------------------------------------------------------------------------------+%n");
+                
+            }else{
+                num+=1;
+                System.out.format(leftAlignment, num,employeeUmum.getEmployeeId(), employeeUmum.getName(), employeeUmum.getJobDesc(),  0.0, employeeUmum.getSalary());
+                System.out.format("+--------------------------------------------------------------------------------+%n");
+            }
+        }
+        System.out.format("| %-5d| %-15s | %53.2f |%n",num+1,"Total Payroll", totalPayrol);
+        System.out.format("+--------------------------------------------------------------------------------+%n");
+        String leftC = "| %-5d | %-70s |%n";
+        System.out.format(leftC,0,"Kembali Ke Main Menu");
+        System.out.format("+--------------------------------------------------------------------------------+%n");
+
+        option = inputServices.inputIsNumber();
+
+    }while(option !=0);
+
+    }
+
+    /*
+     * Menghapus data employee
+     */
+    public void removeEmployee(List<EmployeeUmum> listEmployee){
+        String idEmployee = inputServices.requestIdEmployee(listEmployee);
+        int idx = -1;
+        for (int i = 0; i < listEmployee.size(); i++){
+            if(listEmployee.get(i).getEmployeeId().contains(idEmployee)){
+                idx = i;
+            }
+            
+        }
+        listEmployee.remove(idx);
+        System.out.println("employee berhasil dihapus...");
+
+    }
+
+    /*
+     * 
+     * Fitur Exit
+     */
+    public void exitApplication(){
+        System.out.println();
+        System.out.println("-------------Terima kasih-----------");
+        System.out.println();
     }
 
     

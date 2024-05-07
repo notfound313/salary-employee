@@ -1,6 +1,10 @@
 package services;
 
+import java.util.List;
 import java.util.Scanner;
+
+import model.parent.EmployeeUmum;
+import model.parent.Placement;
 
 public class InputDataServices {
     ValidasiDataServices validasi = new ValidasiDataServices();
@@ -80,9 +84,10 @@ public class InputDataServices {
         
 
     }
-    public String[] inputDataProjectLeader(){
-        String [] dataKaryawan = {"Project Leader"};
+    public String[] inputDataProjectLeader(){        
         String [] pertanyaan ={"Name","Address","Age","Jobdesc","Placement","Total Project"};
+        String [] dataKaryawan = new String[pertanyaan.length+1];
+        dataKaryawan[0] = "Project Leader";
         for (int i = 0; i < pertanyaan.length; i++) {
             System.out.println(pertanyaan[i]);
             dataKaryawan[i+1] = inputScanner();            
@@ -94,8 +99,10 @@ public class InputDataServices {
     }
 
     public String[] inputDataAnalyst(){
-        String [] dataKaryawan = {"Analyst"};
+       
         String [] pertanyaan ={"Name","Address","Age","Jobdesc","Placement"};
+        String [] dataKaryawan = new String[pertanyaan.length+1];
+        dataKaryawan[0] = "Analyst";
         for (int i = 0; i < pertanyaan.length; i++) {
             System.out.println(pertanyaan[i]);
             dataKaryawan[i+1] = inputScanner();            
@@ -103,6 +110,40 @@ public class InputDataServices {
 
         return dataKaryawan;
         
+
+    }
+
+    public String requestIdEmployee(List<EmployeeUmum> listEmployee){
+        boolean valreq;
+        String idEmployee;
+        do{
+            System.out.println("Masukan Id Employee");
+            idEmployee = inputScanner();
+            valreq = validasi.validasiIdEmployee(idEmployee, listEmployee);
+            if(!valreq){
+                System.out.println("id tidak ditemukan");
+            }
+
+        }while(!valreq);
+
+        return idEmployee;
+    }
+
+    public String requestPlacement(List<Placement> placements){
+        boolean valreq;
+        String placement;
+        do{
+            System.out.println("Silahkan edit placement employee");
+            placement = inputScanner();
+            valreq = validasi.validasiPlacement(placement, placements);
+            if(!valreq){
+                System.out.println("Placement tidak dalam jangkoan");
+            }
+
+        }while(!valreq);
+
+        return placement;
+
 
     }
     public int inputIsNumber(){

@@ -20,6 +20,7 @@ public  class EmployeeUmum extends Person implements SalaryInterface{
     @Override
     public void calculateSalaryEmployee() {
         // TODO Auto-generated method stub
+        setSalary(getPlacement().getUMK());  
         
     }
 
