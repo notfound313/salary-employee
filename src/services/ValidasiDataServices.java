@@ -37,5 +37,10 @@ public class ValidasiDataServices {
         return status;
         
     }
+    public  boolean validasiAlphabet(String dataInput){
+        String regexAlphabet = "^[a-zA-Z ]*$";
+        boolean isAlphabet = dataInput.matches(regexAlphabet);
+        return isAlphabet;
+     }
     
 }

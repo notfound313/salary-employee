@@ -59,11 +59,20 @@ public class InputDataServices {
 
     public String[] inputDataEmployeeUmum(){        
         String [] pertanyaan ={"Name","Address","Age","Jobdesc","Placement"};
+        String [] dataInteger ={"Age"};
         String [] dataKaryawan = new String[pertanyaan.length+1];
         dataKaryawan[0]="employee";
         for (int i = 0; i < pertanyaan.length; i++) {
             System.out.println(pertanyaan[i]);
-            dataKaryawan[i+1] = inputScanner();            
+            for(int j =0; j < dataInteger.length; j++){
+                if(pertanyaan[i].contains(dataInteger[j])){
+                    dataKaryawan[i+1] = String.valueOf(inputIsNumber());  
+    
+                }else{
+                    dataKaryawan[i+1] = inputAlphabet();  
+    
+                }            
+            }                    
         }
 
         return dataKaryawan;
@@ -73,11 +82,20 @@ public class InputDataServices {
 
     public String[] inputDataProgrammer(){        
         String [] pertanyaan ={"Name","Address","Age","Jobdesc","Placement","Programming Language","Experience"};
+        String[] dataInteger = {"Age","Experience"};
         String [] dataKaryawan = new String[pertanyaan.length+1];
         dataKaryawan[0] = "Programmer";
         for (int i = 0; i < pertanyaan.length; i++) {
             System.out.println(pertanyaan[i]);
-            dataKaryawan[i+1] = inputScanner();            
+            for(int j =0; j < dataInteger.length; j++){
+                if(pertanyaan[i].contains(dataInteger[j])){
+                    dataKaryawan[i+1] = String.valueOf(inputIsNumber());  
+    
+                }else{
+                    dataKaryawan[i+1] = inputAlphabet();  
+    
+                }            
+            }            
         }
 
         return dataKaryawan;
@@ -86,12 +104,21 @@ public class InputDataServices {
     }
     public String[] inputDataProjectLeader(){        
         String [] pertanyaan ={"Name","Address","Age","Jobdesc","Placement","Total Project"};
+        String [] dataInteger = {"Age","Total Project"};
         String [] dataKaryawan = new String[pertanyaan.length+1];
         dataKaryawan[0] = "Project Leader";
         for (int i = 0; i < pertanyaan.length; i++) {
             System.out.println(pertanyaan[i]);
-            dataKaryawan[i+1] = inputScanner();            
+            for(int j =0; j < dataInteger.length; j++){
+                if(pertanyaan[i].contains(dataInteger[j])){
+                    dataKaryawan[i+1] = String.valueOf(inputIsNumber());  
+    
+                }else{
+                    dataKaryawan[i+1] = inputAlphabet();  
+    
+                }            
         }
+    }
 
         return dataKaryawan;
         
@@ -101,12 +128,27 @@ public class InputDataServices {
     public String[] inputDataAnalyst(){
        
         String [] pertanyaan ={"Name","Address","Age","Jobdesc","Placement"};
+        String [] dataInteger ={"Age"};
         String [] dataKaryawan = new String[pertanyaan.length+1];
         dataKaryawan[0] = "Analyst";
+                        
         for (int i = 0; i < pertanyaan.length; i++) {
             System.out.println(pertanyaan[i]);
-            dataKaryawan[i+1] = inputScanner();            
+            for(int j =0; j < dataInteger.length; j++){
+            if(pertanyaan[i].contains(dataInteger[j])){
+                dataKaryawan[i+1] = String.valueOf(inputIsNumber());  
+
+            }else{
+                dataKaryawan[i+1] = inputAlphabet();  
+
+            }
+                      
         }
+    }
+        
+
+
+    
 
         return dataKaryawan;
         
@@ -133,7 +175,7 @@ public class InputDataServices {
         boolean valreq;
         String placement;
         do{
-            System.out.println("Silahkan edit placement employee");
+            System.out.println("Silahkan masukan placement employee");
             placement = inputScanner();
             valreq = validasi.validasiPlacement(placement, placements);
             if(!valreq){
@@ -143,6 +185,22 @@ public class InputDataServices {
         }while(!valreq);
 
         return placement;
+
+
+    }
+    public String inputAlphabet(){
+        boolean valreq;
+        String alphabet;        
+        
+        do{
+            
+            alphabet = inputScanner();
+            valreq = validasi.validasiAlphabet(alphabet);
+            if(!valreq){
+                System.out.println("Hanya menerima nilai alphabet");
+            }
+        }while(!valreq);
+        return alphabet;
 
 
     }
