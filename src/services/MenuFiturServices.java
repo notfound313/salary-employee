@@ -307,6 +307,10 @@ public class MenuFiturServices {
             if(employeeUmum.getEmployeeId().contains(idEmployee)){
                 employeeUmum.setPlacement(plc);
                 employeeUmum.calculateSalaryEmployee();
+                if(employeeUmum instanceof EmployeeTech){
+                    ((EmployeeTech) employeeUmum).calculateAllowance();
+                }
+            
                 
             }
             

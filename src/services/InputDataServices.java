@@ -68,10 +68,11 @@ public class InputDataServices {
                 if(pertanyaan[i].contains(dataInteger[j])){
                     dataKaryawan[i+1] = String.valueOf(inputIsNumber());  
     
-                }else{
-                    dataKaryawan[i+1] = inputAlphabet();  
-    
-                }            
+                }        
+            }
+            if(dataKaryawan[i+1] == null){
+                dataKaryawan[i+1] = inputAlphabet();
+
             }                    
         }
 
@@ -82,20 +83,22 @@ public class InputDataServices {
 
     public String[] inputDataProgrammer(){        
         String [] pertanyaan ={"Name","Address","Age","Jobdesc","Placement","Programming Language","Experience"};
-        String[] dataInteger = {"Age","Experience"};
+        String[] dataInteger = {"Age", "Experience"};
         String [] dataKaryawan = new String[pertanyaan.length+1];
         dataKaryawan[0] = "Programmer";
         for (int i = 0; i < pertanyaan.length; i++) {
-            System.out.println(pertanyaan[i]);
+            System.out.println(pertanyaan[i]);           
             for(int j =0; j < dataInteger.length; j++){
                 if(pertanyaan[i].contains(dataInteger[j])){
                     dataKaryawan[i+1] = String.valueOf(inputIsNumber());  
-    
-                }else{
-                    dataKaryawan[i+1] = inputAlphabet();  
-    
-                }            
-            }            
+                       
+                }       
+            } 
+            if(dataKaryawan[i+1] == null){
+                dataKaryawan[i+1] = inputAlphabet();
+
+            }
+                      
         }
 
         return dataKaryawan;
@@ -113,10 +116,11 @@ public class InputDataServices {
                 if(pertanyaan[i].contains(dataInteger[j])){
                     dataKaryawan[i+1] = String.valueOf(inputIsNumber());  
     
-                }else{
-                    dataKaryawan[i+1] = inputAlphabet();  
-    
-                }            
+                }           
+        }
+        if(dataKaryawan[i+1] == null){
+            dataKaryawan[i+1] = inputAlphabet();
+
         }
     }
 
@@ -138,11 +142,12 @@ public class InputDataServices {
             if(pertanyaan[i].contains(dataInteger[j])){
                 dataKaryawan[i+1] = String.valueOf(inputIsNumber());  
 
-            }else{
-                dataKaryawan[i+1] = inputAlphabet();  
-
             }
                       
+        }
+        if(dataKaryawan[i+1] == null){
+            dataKaryawan[i+1] = inputAlphabet();
+
         }
     }
         
