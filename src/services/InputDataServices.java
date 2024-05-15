@@ -8,6 +8,7 @@ import model.parent.Placement;
 
 public class InputDataServices {
     ValidasiDataServices validasi = new ValidasiDataServices();
+    
     public  String inputScanner(){
         @SuppressWarnings("resource")
         Scanner input = new Scanner(System.in);
@@ -17,7 +18,7 @@ public class InputDataServices {
 
     }
 
-    public String[] inputJenisKaryawan(){
+    public String[] inputJenisKaryawan(List<Placement> listPlacements){
         int option;
         String[] dataKaryawan = {};
         
@@ -31,19 +32,19 @@ public class InputDataServices {
             option = inputIsNumber();
             switch (option) {
                 case 1:
-                    dataKaryawan = inputDataEmployeeUmum();
+                    dataKaryawan = inputDataEmployeeUmum(listPlacements);
                     option=0;                                        
                     break;
                 case 2:
-                    dataKaryawan = inputDataProgrammer();
+                    dataKaryawan = inputDataProgrammer(listPlacements);
                     option=0; 
                     break;
                 case 3:
-                    dataKaryawan = inputDataProjectLeader();
+                    dataKaryawan = inputDataProjectLeader(listPlacements);
                     option=0; 
                     break;
                 case 4:
-                    dataKaryawan = inputDataAnalyst();
+                    dataKaryawan = inputDataAnalyst(listPlacements);
                     option=0; 
                     break;
             
@@ -57,7 +58,7 @@ public class InputDataServices {
         return dataKaryawan;
     }
 
-    public String[] inputDataEmployeeUmum(){        
+    public String[] inputDataEmployeeUmum(List<Placement> listPlacements){        
         String [] pertanyaan ={"Name","Address","Age","Jobdesc","Placement"};
         String [] dataInteger ={"Age"};
         String [] dataKaryawan = new String[pertanyaan.length+1];
@@ -71,7 +72,13 @@ public class InputDataServices {
                 }        
             }
             if(dataKaryawan[i+1] == null){
-                dataKaryawan[i+1] = inputAlphabet();
+                if(pertanyaan[i].equalsIgnoreCase("Placement")){
+                    dataKaryawan[i+1]= inputPlacement(listPlacements);
+
+                }
+               else{
+                 dataKaryawan[i+1] = inputAlphabet();
+               }
 
             }                    
         }
@@ -81,7 +88,7 @@ public class InputDataServices {
 
     }
 
-    public String[] inputDataProgrammer(){        
+    public String[] inputDataProgrammer(List<Placement> listPlacements){        
         String [] pertanyaan ={"Name","Address","Age","Jobdesc","Placement","Programming Language","Experience"};
         String[] dataInteger = {"Age", "Experience"};
         String [] dataKaryawan = new String[pertanyaan.length+1];
@@ -95,7 +102,13 @@ public class InputDataServices {
                 }       
             } 
             if(dataKaryawan[i+1] == null){
-                dataKaryawan[i+1] = inputAlphabet();
+                if(pertanyaan[i].equalsIgnoreCase("Placement")){
+                    dataKaryawan[i+1]= inputPlacement(listPlacements);
+
+                }
+               else{
+                 dataKaryawan[i+1] = inputAlphabet();
+               }
 
             }
                       
@@ -105,7 +118,7 @@ public class InputDataServices {
         
 
     }
-    public String[] inputDataProjectLeader(){        
+    public String[] inputDataProjectLeader(List<Placement> listPlacements){        
         String [] pertanyaan ={"Name","Address","Age","Jobdesc","Placement","Total Project"};
         String [] dataInteger = {"Age","Total Project"};
         String [] dataKaryawan = new String[pertanyaan.length+1];
@@ -119,7 +132,13 @@ public class InputDataServices {
                 }           
         }
         if(dataKaryawan[i+1] == null){
-            dataKaryawan[i+1] = inputAlphabet();
+            if(pertanyaan[i].equalsIgnoreCase("Placement")){
+                dataKaryawan[i+1]= inputPlacement(listPlacements);
+
+            }
+           else{
+             dataKaryawan[i+1] = inputAlphabet();
+           }
 
         }
     }
@@ -129,7 +148,7 @@ public class InputDataServices {
 
     }
 
-    public String[] inputDataAnalyst(){
+    public String[] inputDataAnalyst(List<Placement> listPlacements){
        
         String [] pertanyaan ={"Name","Address","Age","Jobdesc","Placement"};
         String [] dataInteger ={"Age"};
@@ -146,7 +165,13 @@ public class InputDataServices {
                       
         }
         if(dataKaryawan[i+1] == null){
-            dataKaryawan[i+1] = inputAlphabet();
+            if(pertanyaan[i].equalsIgnoreCase("Placement")){
+                dataKaryawan[i+1]= inputPlacement(listPlacements);
+
+            }
+           else{
+             dataKaryawan[i+1] = inputAlphabet();
+           }
 
         }
     }
@@ -181,7 +206,25 @@ public class InputDataServices {
         String placement;
         do{
             System.out.println("Silahkan masukan placement employee");
-            placement = inputScanner();
+            placement = inputAlphabet();
+            valreq = validasi.validasiPlacement(placement, placements);
+            if(!valreq){
+                System.out.println("Placement tidak dalam jangkoan");
+            }
+
+        }while(!valreq);
+
+        return placement;
+
+
+    }
+
+    public String inputPlacement(List<Placement> placements){
+        boolean valreq;
+        String placement;
+        do{
+           
+            placement = inputAlphabet();
             valreq = validasi.validasiPlacement(placement, placements);
             if(!valreq){
                 System.out.println("Placement tidak dalam jangkoan");

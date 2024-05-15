@@ -20,7 +20,8 @@ public class MenuFiturServices {
      */
 
     public void menambahKarywanBaru(List<EmployeeUmum> employeeUmums){
-        String[] dataKaryawanBaru= inputServices.inputJenisKaryawan();
+        List<Placement> listPlace = getAllPlacement(employeeUmums);
+        String[] dataKaryawanBaru= inputServices.inputJenisKaryawan(listPlace);
         String [] jenisKaryawan = {"employee","Programmer","Project Leader", "Analyst"};
         int idx = 0 ;
         if(dataKaryawanBaru.length != 0){
